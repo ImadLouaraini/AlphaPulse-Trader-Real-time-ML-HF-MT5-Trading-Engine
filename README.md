@@ -46,11 +46,11 @@ Modular Architecture:
                ┌───────────────────────┴───────────────────────┐
                ▼                                               ▼
     ┌─────────────────────┐                          ┌────────────────────────┐
-    │      signals.py      │                         │ money_management_mt5.py│
+    │      signals.py     │                          │ money_management_mt5.py│
     │---------------------│                          │------------------------│
-    │ - Barrier signals    │<----------------------->│ - Lot sizing           │
-    │ - Correlation filter │                         │ - SL/TP computation    │
-    │ - Trading logic      │                         │ - Risk per trade       │
+    │ - Barrier signals   │<-----------------------> │ - Lot sizing           │
+    │ - Correlation filter│                          │ - SL/TP computation    │
+    │ - Trading logic     │                          │ - Risk per trade       │
     └─────────────────────┘                          └────────────────────────┘
                                        ▲
                                        │
