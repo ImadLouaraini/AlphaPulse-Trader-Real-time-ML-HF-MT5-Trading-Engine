@@ -24,46 +24,44 @@ Clean separation of ML, signals, and execution logic for easy maintenance and ex
 
 # Project Structure
 
-               ┌────────────────────────────┐
-               │ live_mt5_hf_optimized.py   │
-               │----------------------------│
-               │ - Main HF trading loop     │
-               │ - Async tick listener      │
-               │ - Executes trades          │
-               │ - Calls background ML      │
-               └─────────────┬─────────────┘
-                             │
-                             ▼
-               ┌────────────────────────────┐
-               │     ml_live_optuna.py       │
-               │----------------------------│
-               │ - compute_features          │
-               │ - train LightGBM (Optuna)  │
-               │ - Background retraining     │
-               │ - Model persistence         │
-               └─────────────┬─────────────┘
-                             │
-         ┌───────────────────┴───────────────────┐
-         ▼                                       ▼
-┌─────────────────────┐                  ┌────────────────────────┐
-│     signals.py      │                  │ money_management_mt5.py│
-│---------------------│                  │------------------------│
-│ - Barrier signals   │                  │ - Lot sizing           │
-│ - Correlation filter│<---------------->| - SL/TP computation    │
-│ - Trading logic     │                  │ - Risk per trade       │
-└─────────────────────┘                  └────────────────────────┘
-                             ▲
-                             │
-                             ▼
-                  x ┌───────────────────┐
-                   │   DataHandler      │
-                   │------------------- │
-                   │ - Fetch historical │
-                   │   & live data      │
-                   │ - Maintain price_df│
-                   └───────────────────┘
-
-                   └───────────────────┘
+                                   ┌────────────────────────────┐
+                       │ live_mt5_hf_optimized.py   │
+                       │----------------------------│
+                       │ - Main HF trading loop     │
+                       │ - Async tick listener      │
+                       │ - Executes trades          │
+                       │ - Calls background ML      │
+                       └───────────────┬───────────┘
+                                       │
+                                       ▼
+                       ┌────────────────────────────┐
+                       │     ml_live_optuna.py       │
+                       │----------------------------│
+                       │ - compute_features          │
+                       │ - Train LightGBM (Optuna)  │
+                       │ - Background retraining     │
+                       │ - Model persistence         │
+                       └───────────────┬───────────┘
+                                       │
+               ┌───────────────────────┴───────────────────────┐
+               ▼                                               ▼
+    ┌─────────────────────┐                          ┌────────────────────────┐
+    │      signals.py      │                          │ money_management_mt5.py│
+    │---------------------│                          │------------------------│
+    │ - Barrier signals    │<------------------------>│ - Lot sizing           │
+    │ - Correlation filter │                          │ - SL/TP computation    │
+    │ - Trading logic      │                          │ - Risk per trade       │
+    └─────────────────────┘                          └────────────────────────┘
+                                       ▲
+                                       │
+                                       ▼
+                           ┌───────────────────┐
+                           │    DataHandler    │
+                           │------------------│
+                           │ - Fetch historical│
+                           │   & live data     │
+                           │ - Maintain price_df│
+                           └───────────────────┘
 
 
 
