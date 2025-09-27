@@ -55,12 +55,14 @@ Clean separation of ML, signals, and execution logic for easy maintenance and ex
                              ▲
                              │
                              ▼
-                   ┌───────────────────┐
+                  x ┌───────────────────┐
                    │   DataHandler      │
-                   │-------------------│
+                   │------------------- │
                    │ - Fetch historical │
                    │   & live data      │
                    │ - Maintain price_df│
+                   └───────────────────┘
+
                    └───────────────────┘
 
 
